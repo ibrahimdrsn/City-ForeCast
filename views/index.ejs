@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CityForecast</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #58ec73, #f1eed7, #3899f0, #1ddfe1, #811796);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 40%;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(190, 205, 78, 0.154);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .weather-info{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .head {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .head h1 {
+            font-size: 2rem;
+            margin-right: 10px;
+            color: #333;
+        }
+
+        .head img {
+            border-radius: 50%;
+            height: 70px;
+            width: auto;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #3899f0;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        #result {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .weather-icon {
+            height: 100px;
+            width: auto;
+            margin-bottom: 10px;
+        }
+
+        .humid-wind {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        @media only screen and (max-width: 768px) {
+            body {
+                background-size: 100% 100%;
+            }
+
+            .container {
+                width: 90%;
+            }
+
+            .head {
+                flex-direction: column;
+                margin-bottom: 10px;
+            }
+
+            .head h1 {
+                font-size: 1.5rem;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .head img {
+                margin-right: 0;
+            }
+
+            input[type="text"] {
+                width: 70%;
+                font-size: 0.9rem;
+            }
+
+            button {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            .weather-icon {
+                height: 70px;
+                margin-bottom: 5px;
+            }
+
+            .humid-wind {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="head">
+        <h1 id="level-title">CityForecast</h1>
+        <img src="/images/8504201.jpg" id="w-img">
+    </div>
+
+    <div class="container">
+        <div class="search-container">
+            <form id="searchform" method="POST">
+                <input type="text" class="form-control" id="cityname" name="cityname" value="" placeholder="Enter a city name">
+                <button type="submit" class="btn btn-success">Search</button>
+            </form>
+        </div>
+        <div id="result">
+            <% if (error === 'initial') { %>
+                <p>Please enter a city name and click on the Search button!</p>
+            <% } else if (error) { %>
+                <p><%= error %></p>
+            <% } else if (wicon) { %>
+                <h2><%= cname %></h2>
+                <div class="weather-info">
+                    <img src="https://openweathermap.org/img/wn/<%= wicon %>@2x.png" alt="Weather Icon" class="weather-icon">
+                    <p><%= wdesc %></p>
+                </div>
+                <div class="additional-info">
+                    <p>Temperature: <%= wtemp %></p>
+                    <p>Humidity: <%= whumid %>%</p>
+                    <p>Wind: <%= wwind %> km/h</p>
+                </div>
+            <% } else { %>
+                <p>City not found. Please enter a valid city name.</p>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
