@@ -6,7 +6,7 @@ const port = 3000;
 
 app.use(express.static("public"));
 
-const APIKey = "e612070c7c6907349b83de26888fb45e";
+const APIKey = "APIKEY";
 
 app.use(express.urlencoded({ extended: true }));
 
